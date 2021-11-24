@@ -53,24 +53,29 @@ write.csv(mysample,"~/mysample.csv", row.names = FALSE)
 
 #Example: Let's try some piping with our mysample data
 piping<-mysample %>% 
-  mutate (seats = avail_seat_km_per_week) %>%
+  mutate(seats = avail_seat_km_per_week) %>%
   subset(incidents_85_99 < 24) %>%
   dim()%>%
   print()
 library(magrittr)
 #TASK: revise this code chunk using piping
 mysample2<-mysample
+mysample2
 arrange(mysample2, airline)
 mysample2<-filter(mysample2, incidents_85_99<25)
 mysample2<-rename(mysample2, seats = avail_seat_km_per_week)
 mysample3<-select(mysample2, incidents_00_14, incidents_85_99)
 mysample4<-summary(mysample3)
 print(mysample4)
-
-mysample %>%
-  mutate(mysample2, airline)
-  mysample2(incidents_85_99<25)  %>%
-  mysample3(mysample2, incidents_00_14, incidents_85_99)  %>%
-  mysample4(summary(mysample3))
-print(mysample4)
-
+#Revision
+library(magrittr)
+library(dplyr)
+  mysample2<-mysample
+  piping<-mysample2 %>%
+  arrange(airline) %>%
+  filter(incidents_85_99<25) %>%
+  rename(seats = avail_seat_km_per_week) %>%
+  select(incidents_00_14, incidents_85_99) %>%
+  summary()%>%
+  print()
+  
